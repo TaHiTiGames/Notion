@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sprint</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 100%; 
+      max-width: 80%;
+      padding: 20px;
+      margin: 0 auto;
+      min-width: 300px;
+      background-color: #f9f9f9;
+      border-radius: 15px; 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border: 2px solid transparent;
+    }
+
+    .bar {
+      width: 99%;
+      height: 1.3vw; 
+      min-height: 10px;
+      background-color: transparent;
+      border: 3px solid #458162;
+      border-radius: 30px;
+      padding: 3px;
+    }
+
+    .inner {
+      width: 0;
+      height: 100%;
+      background-color: #458162;
+      border-radius: 1vw;
+      position: relative;
+    }
+
+    .inner::after,
+    .inner::before {
+      content: attr(data-percent);
+      font-size: 12px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .inner.after::before,
+    .inner.before::after {
+      display: none;
+    }
+
+    .inner.after::after {
+      right: -40px;
+    }
+
+    .inner.before::before {
+      right: 40px;
+      color: #fff;
+    }
+
+    #label {
+      font-size: 17px;
+      margin-bottom: 15px;
+      margin-left: 5px;
+      font-family: 'Gill Sans', sans-serif;
+    }
+
+    #label span {
+      font-size: 22px;
+      color: #458162;
+      display: inline-block;
+      padding: 0 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="label" id="label"></div>
+    <div class="bar">
+      <div class="inner" id="inner" data-percent=""></div>
+    </div>
+  </div>
+  <script>
+    window.onload = function () {
+      let start_p = "2024/09/15",
+        end_p = "2024/09/22",
+        name = "";
+
+      const bar = document.getElementById("inner"),
+        label = document.getElementById("label"),
+        _now = new Date(),
+        _start = new Date(start_p),
+        _end = new Date(end_p).setHours(23, 59, 59),
+        total = _end - _start,
+        passed = _now - _start;
+
+      let percent = Math.min(Math.max(passed / total, 0), 1).toFixed(2),
+        remain = total - passed,
+        days = Math.floor(remain / (24 * 60 * 60 * 1000)),
+        hours = Math.floor((remain % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+
+      let remain_label = _now <= _start ? `${name}before` :
+        _now >= _end ? `${name}done` :
+        `Sprint :<span>${days}</span>days<span>${hours}</span> hours`;
+
+      bar.style.width = `${(percent * 100).toFixed(0)}%`;
+      bar.classList.toggle("before", percent > 0.9);
+      label.innerHTML = remain_label;
+    };
+  </script>
+</body>
+
+</html>

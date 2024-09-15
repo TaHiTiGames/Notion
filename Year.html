@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>progressYear</title>
+    <style>
+        body,
+        html {
+            background-color: #ffffff;
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .progress-group {
+            width: 90%; 
+            max-width: 1200px;
+            margin: 0 auto;
+            font-family: "Share Tech Mono", monospace;
+            padding: 1rem 2rem; 
+            box-sizing: border-box;
+            font-size: 1rem;
+            background-color: #f9f9f9;
+            border-radius: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #right {
+            width: 100%;
+        }
+
+        li {
+            list-style: none;
+            width: 100%;
+            height: 1.2rem; 
+            border-radius: .3rem;
+            background: #f3f3f3;
+            color: #ffffff;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        li div {
+            background: #d6a44f;
+            height: 100%;
+            width: 0;
+            border-radius: .3rem;
+            font-size: 1rem;
+            text-align: right;
+            line-height: 1.2rem;
+        }
+
+        .progress-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .progress-item>span {
+            font-size: 1.2rem; 
+            width: 4rem; 
+            font-family: 'Gill Sans', sans-serif;
+            margin-right: 2rem;
+        }
+
+        .progress-item li {
+            width: calc(100% - 6rem); 
+        }
+
+        #clock {
+            font-family: "Share Tech Mono", monospace;
+            text-align: center;
+            letter-spacing: 0.05em;
+            font-size: 1rem; 
+            margin-bottom: 2rem;
+        }
+
+        html[theme="dark"],
+        html[theme="dark"] body {
+            background-color: #191919;
+            color: #ffffff;
+        }
+
+        html[theme="dark"] li {
+            background-color: rgba(255, 255, 255, .3);
+        }
+
+        html[theme="dark"] li div {
+            background-color: rgba(255, 255, 255, .9);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-group" id="box">
+        <div id="right">
+            <div class="progress-item" id="year-bar">
+                <span>Year</span>
+                <li id="year">
+                    <div></div>
+                </li>
+            </div>
+            <div class="progress-item" id="month-bar">
+                <span>Month</span>
+                <li id="month">
+                    <div></div>
+                </li>
+            </div>
+            <div class="progress-item" id="week-bar">
+                <span>Week</span>
+                <li id="week">
+                    <div></div>
+                </li>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        
+        let Days = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        let now_date = new Date(),
+            _time = now_date.getTime(),
+            now_year = now_date.getFullYear();
+
+        let _day = now_date.getDay() || 7;
+        document.getElementById('week').children[0].style.width = `${_day * 100 / 7}%`;
+
+        if (now_year % 4 === 0 && now_year % 100 !== 0) {
+            Days[2] = 29;
+        }
+
+        let cur_month = now_date.getMonth() + 1,
+            month_day = now_date.getDate();
+        document.getElementById('month').children[0].style.width = `${month_day * 100 / Days[cur_month]}%`;
+
+        let year_start = new Date(`${now_year}/1/1`).getTime(),
+            days_passed = Math.ceil((_time - year_start) / (24 * 60 * 60 * 1000)),
+            total_days = (now_year % 4 === 0 && now_year % 100 !== 0) ? 366 : 365;
+        let year_rate = days_passed * 100 / total_days;
+        document.getElementById('year').children[0].style.width = `${year_rate}%`;
+    }
+</script>
+
+</html>
