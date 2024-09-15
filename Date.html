@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Date</title>
+  <style>
+    .container {
+      font-family: 'Gill Sans', sans-serif;
+      text-align: center;
+      color: #333;
+    }
+
+    .week {
+      width: 50vw;
+      max-width: 400px;
+      min-width: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 auto;
+    }
+
+    .day {
+      display: block;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      line-height: 30px;
+    }
+
+    .day.active {
+      color: #fff;
+      background-color: #333;
+    }
+
+    html[theme="dark"],
+    html[theme="dark"] body {
+      background-color: #191919;
+    }
+
+    html[theme="dark"] .container {
+      color: #fff;
+    }
+
+    html[theme="dark"] .day.active {
+      color: #333;
+      background-color: rgba(255, 255, 255, 1);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="box">
+    <h1 id="date" style="font-size: 1.8em;"></h1>
+    <div class="week">
+      <span class="day" id="day-1">M</span><span class="day" id="day-2">T</span><span class="day"
+        id="day-3">W</span><span class="day" id="day-4">T</span><span class="day" id="day-5">F</span><span class="day"
+        id="day-6">S</span><span class="day" id="day-0">S</span>
+    </div>
+  </div>
+  <script>
+    const date = new Date();
+    const formatDate = `${date.getFullYear()}/${date.getMonth() + 1
+      }/${date.getDate()}`;
+    document.getElementById("date").innerHTML = formatDate;
+    const day = date.getDay();
+    document.getElementById(`day-${day}`).classList.add("active");
+  </script>
+</body>
+
+</html>
