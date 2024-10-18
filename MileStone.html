@@ -78,7 +78,7 @@
 
     #label span {
       font-size: 20px;
-      color: #458162;
+      color: #C50750;
       display: inline-block;
       padding: 0 10px;
     }
@@ -94,8 +94,8 @@
   </div>
   <script>
     window.onload = function () {
-      let start_p = "2024/09/15",
-        end_p = "2024/11/15",
+      let start_p = "2024/10/19",
+        end_p = "2024/12/19",
         name = "";
 
       const bar = document.getElementById("inner"),
@@ -112,7 +112,7 @@
 
       let remain_label = _now <= _start ? `${name}before` :
         _now >= _end ? `${name}done` :
-        `MileStone  -<span>Design</span> :<span>${days}</span>days`;
+        `MileStone  -<span>Art</span> :<span>${days}</span>days`;
 
       bar.style.width = `${(percent * 100).toFixed(0)}%`;
       bar.classList.toggle("before", percent > 0.9);
